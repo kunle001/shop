@@ -2,7 +2,7 @@
 
 ## Overview
 
-This documentation outlines the features and implementation details of a Simple Shop API designed for managing products. The API provides functionalities such as creating, updating, deleting, and retrieving products. Additionally, it includes a tested authentication system allowing users with different permissions to perform actions based on their roles.
+This documentation outlines the features and implementation details of a Simple Shop API designed for managing products. The API provides functionalities such as creating, updating, deleting, and retrieving products. Additionally, it includes a tested authentication system allowing users with different permissions to perform actions based on their roles. 
 
 ## Authentication System
 
@@ -39,6 +39,21 @@ The package is utilized for various middleware functions, enhancing the API's re
 The API has undergone rigorous testing to ensure its robustness. All test codes are located in the "__test__" folders, with the test setup available in the "test" folder.
 Testing was done using jest and super test.
 
+to run tests , clone this repo, 
+Run 
+
+```bash 
+npm install //to install all necessary packages
+```
+set environmental variables, E.g PORT, JWT_KEY of your choice and then run 
+
+```bash 
+npm test //This will trigger all the tests.
+```
+there are abou 22 tests in total.
+
+To Run the Tests completely go to the app.ts file comment out line 42 to 45 , where i added rate limiting, so all tests can run successfully
+
 ## Security Measures
 
 To enhance security, all incoming requests are sanitized, mitigating the risk of database injection attacks.
@@ -58,13 +73,14 @@ Also i encoporated rate limiter, which minimizes traffic or API attacks resultin
   - Admins only.
 
 - **Request Body:**
-  - Specify product details.
+  - name, price, description,category.
 
 - **Example:**
   ```json
   {
     "name": "Product Name",
     "price": 29.99,
+    "category": "products category",
     "description": "Product Description"
   }
   ```
@@ -81,7 +97,7 @@ Also i encoporated rate limiter, which minimizes traffic or API attacks resultin
   - `productId`: ID of the product to be updated.
 
 - **Request Body:**
-  - Specify updated product details.
+  - name, price, description,category.
 
 - **Example:**
   ```json
@@ -120,12 +136,12 @@ Also i encoporated rate limiter, which minimizes traffic or API attacks resultin
 The image is on docker hub, you can pull the image by running this command
 
 ```docker
-docker pull kkunle/store:v2
+docker pull kkunle/product_store:latest
 ```
 
 #### Postman Documentation
 You can find the entire Post man collection here
-[documentation](https://postman.com)
+[documentation](https://documenter.getpostman.com/view/22302216/2s9YeD9Df6)
 
 ## Conclusion
 
