@@ -1,16 +1,20 @@
 import jwt from "jsonwebtoken"
 import { Response, Request } from "express"
 
+
 export interface setCookiePayload {
   id: string
   email: string,
   role?: "admin" | "user"
 }
 
+
+//this function Automatically saves jwt in a cookie, just to access protected routes
+
 export const setCookies = (payload: setCookiePayload, req: Request, res: Response): string => {
   const userjwt = jwt.sign({
     ...payload,
-  }, process.env.JWT_SECRET!, {
+  }, process.env.JWT_KEY!, {
     expiresIn: Date.now() + 2 * 2 * 60 * 60 * 1000
   });
 

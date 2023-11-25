@@ -4,7 +4,18 @@
   "description": "A simple RESTAPI to manage products in a store",
   "main": "server.ts",
   "scripts": {
-    "test": "jest "
+    "test": "jest --watchAll",
+    "start": "ts-node-dev src/index.ts",
+    "test:ci": "jest",
+    "build": "tsc"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./src/test/setup.ts"
+    ],
+    "testTimeout": 10000
   },
   "repository": {
     "type": "git",
@@ -13,11 +24,12 @@
   "author": "Olanipekun Adekunle",
   "license": "ISC",
   "dependencies": {
-    "@kunleticket/common": "^1.0.62",
+    "@kunleticket/common": "^1.0.65",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.7",
     "@types/mongo-sanitize": "^1.0.3",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
@@ -33,6 +45,12 @@
     "jsonwebtoken": "^9.0.2",
     "mongo-sanitize": "^1.1.0",
     "mongoose": "^8.0.1",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.1",
+    "ts-node-dev": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/supertest": "^2.0.16",
+    "mongodb-memory-server": "^9.1.1"
   }
 }

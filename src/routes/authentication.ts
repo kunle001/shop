@@ -1,6 +1,5 @@
 import express from "express";
 import { AuthenticationController } from "../controllers/authentication";
-import { body } from "express-validator"
 import { validateBody } from "../middlewares/validations";
 import { validateRequest } from "@kunleticket/common";
 

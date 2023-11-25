@@ -8,6 +8,7 @@ interface ProductAttrs {
   category: string;
 }
 
+// interface of what a product document returns 
 export interface ProductDoc extends Document {
   name: string;
   price: number;
@@ -53,6 +54,7 @@ const productSchema = new mongoose.Schema(
   }
 );
 
+// setting up the build method that takes in only required parameters
 productSchema.statics.build = (attrs: ProductAttrs) => {
   return new Product(attrs);
 };

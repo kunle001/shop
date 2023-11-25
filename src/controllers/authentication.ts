@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { User } from "../models/user";
 import { Password } from "../utils/password";
-import { BadRequestError } from "@kunleticket/common";
+import { BadRequestError, NotFoundError } from "@kunleticket/common";
 import { Respond } from "../utils/response";
 import { setCookies } from "../utils/setCookie";
 
+// All Authentication actions
 export class AuthenticationController {
 
   public Login = async (req: Request, res: Response) => {
@@ -15,7 +16,7 @@ export class AuthenticationController {
     });
 
     //I used my npm package for error handling
-    if (!user) throw new BadRequestError("no existing email")
+    if (!user) throw new NotFoundError("no existing email")
     // check if password is correct
     const isMatch = await Password.compare(user.password, password);
 
@@ -25,7 +26,7 @@ export class AuthenticationController {
       role: user.role
     };
 
-    // setting the json web token
+    // setting the json web token to the cookies
     setCookies(payload, req, res);
 
     if (!isMatch) {
@@ -35,6 +36,7 @@ export class AuthenticationController {
     Respond(200, "logged in successfully", res)
   };
 
+  // Reset secret token to nil
   public Logout = (req: Request, res: Response) => {
     res.cookie('secretoken', "");
   };
@@ -46,7 +48,11 @@ export class AuthenticationController {
       email
     });
 
+
     if (existingEmail) {
+      // checking if email already exists 
+      // i do this for double validation, even if validation is being done
+      // from the Database level.
       throw new BadRequestError("email is taken")
     } else if (password != confirmPassword) {
       throw new BadRequestError("confirm your password correctly")
@@ -59,6 +65,14 @@ export class AuthenticationController {
     });
 
     user = await user.save()
+
+    setCookies({
+      email: user.email,
+      role: user.role,
+      id: user.id
+    }, req, res);
+
+
     Respond(201, user, res)
   };
 }

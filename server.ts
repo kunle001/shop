@@ -19,10 +19,7 @@ if (!db || !db_pass) {
 const DB = process.env.DB!.replace('<password>', process.env.DB_PASSWORD!)
 
 // connect to DB
-mongoose.connect(DB, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-} as ConnectOptions).then(() => {
+mongoose.connect(DB).then(() => {
   console.log('DB conected')
 }).catch((err) => {
   console.log("could not connect to DB, because", err)

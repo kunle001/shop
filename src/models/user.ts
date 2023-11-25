@@ -8,7 +8,7 @@ interface UserAttrs {
   password: string
 }
 
-interface UserDoc extends Document {
+export interface UserDoc extends Document {
   email: string
   password: string
   name?: string
