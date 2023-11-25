@@ -1,5 +1,5 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import mongoose, { ConnectOptions } from 'mongoose';
+import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken'
 import { User, UserDoc } from '../models/user';
 import { Product, ProductDoc } from '../models/product';
@@ -69,7 +69,7 @@ global.signin = (role) => {
   const sessionJSON = JSON.stringify(session)
 
   // Take JSON and encode it as base64
-  const base64 = Buffer.from(sessionJSON).toString('base64');
+  Buffer.from(sessionJSON).toString('base64');
 
   //  return a string thats the cookie with encoded data
 

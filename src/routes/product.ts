@@ -1,6 +1,6 @@
 import express from "express"
 import { ProductController } from "../controllers/product"
-import { currentUser, requireAuth, restrictAccess, validateRequest } from "@kunleticket/common"
+import { requireAuth, restrictAccess, validateRequest } from "@kunleticket/common"
 import { validateBody } from "../middlewares/validations"
 
 

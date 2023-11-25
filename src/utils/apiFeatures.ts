@@ -1,4 +1,4 @@
-import { Document, Model, Query } from "mongoose";
+import { Document, Query } from "mongoose";
 
 interface APIFeaturesQuery {
   find(conditions?: any): Query<any[], Document>;
