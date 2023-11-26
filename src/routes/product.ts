@@ -25,11 +25,11 @@ router.route("/").post(
   productController.createProduct
 )
 
-router.route("/update/:id").patch(
+router.route("/:id").patch(
   productController.updateProduct
 )
 
-router.route("/delete/:id").delete(
+router.route("/:id").delete(
   productController.deleteProduct
 )
 

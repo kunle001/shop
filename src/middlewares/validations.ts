@@ -1,5 +1,7 @@
 import { body, ValidationChain } from "express-validator"
 
+// This function validates the request body, it a list of the required fields
+// and validates request input
 export const validateBody = (fields: string[]) => {
   const validator: ValidationChain[] = [];
 
@@ -16,6 +18,15 @@ export const validateBody = (fields: string[]) => {
       case "phone":
         validator.push(
           body('phone')
+            .isAlphanumeric()
+            .notEmpty()
+            .withMessage("missing field 'phone'")
+        )
+        break
+      case "price":
+        validator.push(
+          body('phone')
+            .isNumeric()
             .notEmpty()
             .withMessage("missing field 'phone'")
         )
