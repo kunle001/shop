@@ -13,7 +13,6 @@ declare global {
   var signin: (role: "admin" | "user") => string[]
 }
 
-
 let mongo: any
 
 beforeAll(async () => {

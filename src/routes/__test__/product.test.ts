@@ -4,11 +4,14 @@ import request from "supertest"
 import { Product } from "../../models/product";
 
 
+
+const product_url = "/api/v1/products"
+
 describe("Products Endpoints Test", () => {
 
   describe("CREATE PRODUCT", () => {
     it("should return 401 if user is not logged in", async () => {
-      await request(app).post("/api/v1/products")
+      await request(app).post(product_url)
         .set({
           name: "test product",
           price: 200,
@@ -19,7 +22,7 @@ describe("Products Endpoints Test", () => {
     });
 
     it("should return 403, if logged in user is not and admin", async () => {
-      await request(app).post("/api/v1/products")
+      await request(app).post(product_url)
         .set({
           name: "test product",
           price: 200,
@@ -33,7 +36,7 @@ describe("Products Endpoints Test", () => {
 
 
   it("should return 400 for missing fields", async () => {
-    await request(app).post("/api/v1/products")
+    await request(app).post(product_url)
       .set({
         name: "test product",
         price: 200,
@@ -44,7 +47,7 @@ describe("Products Endpoints Test", () => {
   });
 
   it("should return 201 for successful product creation", async () => {
-    const res = await request(app).post("/api/v1/products")
+    const res = await request(app).post(product_url)
       .send({
         name: "test product",
         price: 200,
@@ -54,7 +57,7 @@ describe("Products Endpoints Test", () => {
       .set("Cookie", global.signin("admin"))
       .expect(201)
 
-    expect(res.body.status).toBe(true)
+    expect(res.body.status).toBe("Success")
   });
 })
 
@@ -63,7 +66,7 @@ describe("GET SINGLE PRODUCT", () => {
     // create a random mongoose object id
     let id = new mongoose.Types.ObjectId().toHexString();
 
-    await request(app).get(`/api/v1/products/${id}`)
+    await request(app).get(`${product_url}/${id}`)
       .expect(404)
   });
 
@@ -74,7 +77,7 @@ describe("GET SINGLE PRODUCT", () => {
     const product = await global.createProduct();
 
     // get the test product
-    await request(app).get(`/api/v1/products/${product._id}`)
+    await request(app).get(`${product_url}/${product._id}`)
       .expect(200)
   })
 });
@@ -84,7 +87,7 @@ describe("UPDATE PRODUCT", () => {
     // create a test product
     const product = await global.createProduct();
 
-    await request(app).patch(`/api/v1/products/update/${product._id}`)
+    await request(app).patch(`${product_url}/${product._id}`)
       .send({
         price: 300
       })
@@ -95,7 +98,7 @@ describe("UPDATE PRODUCT", () => {
     const product = await global.createProduct();
 
     // try to update product as a user
-    await request(app).patch(`/api/v1/products/update/${product._id}`)
+    await request(app).patch(`${product_url}/${product._id}`)
       .send({
         price: 300
       })
@@ -107,7 +110,7 @@ describe("UPDATE PRODUCT", () => {
     let id = new mongoose.Types.ObjectId().toHexString();
 
     // login as admin but try to access a product that doesn't exist
-    await request(app).patch(`/api/v1/products/update/${id}`)
+    await request(app).patch(`${product_url}/${id}`)
       .send({
         price: 300
       })
@@ -119,7 +122,7 @@ describe("UPDATE PRODUCT", () => {
     const product = await global.createProduct();
 
     // Login as admin, and tries to access test product
-    await request(app).patch(`/api/v1/products/update/${product.id}`)
+    await request(app).patch(`${product_url}/${product.id}`)
       .send({
         price: 50000
       })
@@ -140,7 +143,7 @@ describe("DELETE PRODUCT", () => {
 
 
     // try to delete a product without a user session
-    await request(app).delete(`/api/v1/products/delete/${product._id}`)
+    await request(app).delete(`${product_url}/${product._id}`)
       .send({
         price: 300
       })
@@ -151,7 +154,7 @@ describe("DELETE PRODUCT", () => {
     const product = await global.createProduct();
 
     // try to delete a product without the right permissions
-    await request(app).delete(`/api/v1/products/delete/${product._id}`)
+    await request(app).delete(`${product_url}/${product._id}`)
       .send({
         price: 300
       })
@@ -164,7 +167,7 @@ describe("DELETE PRODUCT", () => {
 
 
     // trying to delete a product that doesn't exist
-    await request(app).delete(`/api/v1/products/delete/${id}`)
+    await request(app).delete(`${product_url}/${id}`)
       .send({
         price: 300
       })
@@ -176,7 +179,7 @@ describe("DELETE PRODUCT", () => {
     const product = await global.createProduct();
 
     // Deleteing a test product
-    await request(app).delete(`/api/v1/products/delete/${product.id}`)
+    await request(app).delete(`${product_url}/${product.id}`)
       .send({
         price: 300
       })

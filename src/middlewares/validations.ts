@@ -15,20 +15,12 @@ export const validateBody = (fields: string[]) => {
             .withMessage("missing field 'email'")
         )
         break
-      case "phone":
-        validator.push(
-          body('phone')
-            .isAlphanumeric()
-            .notEmpty()
-            .withMessage("missing field 'phone'")
-        )
-        break
       case "price":
         validator.push(
-          body('phone')
+          body('price')
             .isNumeric()
             .notEmpty()
-            .withMessage("missing field 'phone'")
+            .withMessage("missing field 'price'")
         )
         break
       default:

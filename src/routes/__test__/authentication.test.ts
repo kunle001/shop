@@ -2,6 +2,9 @@ import { app } from "../../../app";
 import request from "supertest"
 
 
+const login_url = "/api/v1/auth/login"
+const signup_url = "/api/v1/auth/signup"
+
 describe("Authentication Endpoints Test", () => {
 
 
@@ -10,7 +13,7 @@ describe("Authentication Endpoints Test", () => {
 
     // testing password confirmation
     it("should return 400 status code for wrong password confirmation", async () => {
-      const res = await request(app).post("/api/v1/auth/signup")
+      const res = await request(app).post(signup_url)
         .send({
           email: "test@email.com",
           name: "test name",
@@ -25,7 +28,7 @@ describe("Authentication Endpoints Test", () => {
     it("should return 400, if email is no longer available", async () => {
       await global.createUser()  //creates a user with email: test@gmail.com
 
-      const res = await request(app).post("/api/v1/auth/signup")
+      const res = await request(app).post(signup_url)
         .send({
           email: "test@gmail.com",
           name: "test name",
@@ -39,7 +42,7 @@ describe("Authentication Endpoints Test", () => {
 
     // if all things are correct, sign-up the user
     it("should return 201 for successful sign up", async () => {
-      await request(app).post("/api/v1/auth/signup")
+      await request(app).post(signup_url)
         .send({
           email: "test@email.com",
           name: "test name",
@@ -59,7 +62,7 @@ describe("Authentication Endpoints Test", () => {
       await global.createUser();
 
       // login with created user email but wrong password
-      const res = await request(app).post("/api/v1/auth/login")
+      const res = await request(app).post(login_url)
         .send({
           email: "test@gmail.com",
           password: "wrong"
@@ -70,7 +73,7 @@ describe("Authentication Endpoints Test", () => {
     });
 
     it("should return 404, if user does not exist", async () => {
-      await request(app).post("/api/v1/auth/login")
+      await request(app).post(login_url)
         .send({
           email: "test@gmail.com",
           password: "test"
@@ -83,14 +86,13 @@ describe("Authentication Endpoints Test", () => {
       await global.createUser();
 
       // logging in with the test user
-      const res = await request(app).post("/api/v1/auth/login")
+      const res = await request(app).post(login_url)
         .send({
           email: "test@gmail.com",
           password: "test"
         })
         .expect(200)
 
-      console.log(res.get("Set-Cookie"))
 
       // confirms that cookies was set after logging in
       expect(res.get('Set-Cookie')).toBeDefined()
