@@ -7,7 +7,8 @@ interface APIFeaturesQuery {
   skip(skip: number): Query<any[], Document>;
   limit(limit: number): Query<any[], Document>;
 }
-
+// This is a utility that helps querying the database from the request query
+// starting with sorting, filtering, paginating and limiting certain fields.
 class APIFeatures {
   query: APIFeaturesQuery;
   queryString: any;

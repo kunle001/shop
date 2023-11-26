@@ -1,18 +1,17 @@
-# Build Stage
-FROM node:16-alpine AS build
+FROM node:alpine
+
 WORKDIR /app
-COPY package*.json ./
+COPY package.json ./
+RUN npm install --only=prod
 
-# Install dependencies
-RUN npm install
+COPY ./ ./
 
-# Transpile TypeScript code using Babel
-RUN npx babel src --out-dir dist --extensions .ts
+# Install TypeScript globally
+RUN npm install -g typescript
 
-# Runtime Stage
-FROM node:16-alpine
-WORKDIR /app
-COPY --from=build /app/dist ./dist
-COPY package*.json ./
-RUN npm ci --only=production
+# Add a build step
+RUN npm run build
+
+EXPOSE 3000
+
 CMD ["npm", "start"]
