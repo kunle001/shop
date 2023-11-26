@@ -6,7 +6,7 @@ import sanitize from "mongo-sanitize"
 import { authRouter } from "./src/routes/authentication";
 import { NotFoundError, currentUser, errorHandler } from "@kunleticket/common";
 import cors from "cors"
-// import rateLimit from "express-rate-limit";
+import rateLimit from "express-rate-limit";
 import { productRouter } from "./src/routes/product";
 
 const app = express();
@@ -28,21 +28,20 @@ app.use((req, res, next) => {
   next();
 });
 
-
-// const limiter = rateLimit({
-//   max: 10,
-//   windowMs: 60 * 30 * 1000,
-//   message: 'Too many Requests from this Ip, try again in 30 minutes'
-// })
+// only 10 request in 20 minutes per Ip Address
+const limiter = rateLimit({
+  max: 10,
+  windowMs: 60 * 20 * 1000,
+  message: 'Too many Requests from this Ip, try again in 30 minutes'
+})
 
 // middle ware check check if there is a current user session
 app.use(currentUser)
 
-// add a rate limiter to authentication endpoints
-// app.use([
-//   '/api/v1/auth',
-//   '/api/v1/products'
-// ], limiter)
+// add a rate limiter to authentication endpoints, to avoid spamming
+app.use([
+  '/api/v1/auth'
+], limiter)
 
 // routes
 app.use("/api/v1/auth", authRouter)
