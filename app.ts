@@ -39,9 +39,7 @@ const limiter = rateLimit({
 app.use(currentUser)
 
 // add a rate limiter to authentication endpoints, to avoid spamming
-app.use([
-  '/api/v1/auth'
-], limiter)
+app.use('/api/v1/auth', limiter)
 
 // routes
 app.use("/api/v1/auth", authRouter)
