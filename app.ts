@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 const limiter = rateLimit({
   max: 10,
   windowMs: 60 * 20 * 1000,
-  message: 'Too many Requests from this Ip, try again in 30 minutes'
+  message: 'Too many Requests from this Ip, try again in 20 minutes'
 })
 
 // middle ware check check if there is a current user session
