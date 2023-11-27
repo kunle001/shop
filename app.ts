@@ -11,6 +11,7 @@ import { productRouter } from "./src/routes/product";
 
 const app = express();
 
+app.set('trust proxy', 1);
 // to parse request body
 app.use(bodyParser.json())
 
