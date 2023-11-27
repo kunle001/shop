@@ -12,6 +12,7 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
+    "automock": false,
     "setupFilesAfterEnv": [
       "./src/test/setup.ts"
     ],
