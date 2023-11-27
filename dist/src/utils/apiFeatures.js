@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.APIFeatures = void 0;
+// This is a utility that helps querying the database from the request query
+// starting with sorting, filtering, paginating and limiting certain fields.
 class APIFeatures {
     constructor(query, queryString) {
         this.query = query;

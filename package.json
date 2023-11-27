@@ -25,7 +25,7 @@
   "author": "Olanipekun Adekunle",
   "license": "ISC",
   "dependencies": {
-    "@kunleticket/common": "^1.0.65",
+    "@kunleticket/common": "^1.0.66",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.6",
     "@types/cors": "^2.8.17",

@@ -17,6 +17,6 @@ router.route("/:id").get(productController.getOneProduct);
 router.use(common_1.requireAuth);
 router.use(common_1.restrictAccess);
 router.route("/").post((0, validations_1.validateBody)(["name", "price", "category", "description"]), common_1.validateRequest, productController.createProduct);
-router.route("/update/:id").patch(productController.updateProduct);
-router.route("/delete/:id").delete(productController.deleteProduct);
+router.route("/:id").patch(productController.updateProduct);
+router.route("/:id").delete(productController.deleteProduct);
 //# sourceMappingURL=product.js.map

@@ -36,6 +36,7 @@ class AuthenticationController {
         // Reset secret token to nil
         this.Logout = (req, res) => {
             res.cookie('secretoken', "");
+            (0, response_1.Respond)(200, "logged out successful", res);
         };
         this.Signup = async (req, res) => {
             const { email, password, name, confirmPassword } = req.body;

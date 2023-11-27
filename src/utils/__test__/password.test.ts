@@ -1,21 +1,42 @@
-import { Password } from "../password";
+// password.test.ts
 
+import { Password } from '../password';
+import bcrypt from "bcrypt"
 
-describe("PASSWORD TEST", () => {
-  it("should hash a string", async () => {
-    const test_string = "password";
-    const hashedpass = await Password.toHash(test_string);
+jest.mock('bcrypt');
 
-    expect(test_string).not.toBe(hashedpass);
+describe('Password class', () => {
+  describe('toHash method', () => {
+    it('should hash the password', async () => {
+      const password = 'password123';
+      const hashedPassword = 'mockedHashedPassword';
 
+      const result = await Password.toHash(password);
+
+      expect(result).toEqual(hashedPassword);
+      expect(bcrypt.hash).toHaveBeenCalledWith(password, 12);
+    });
   });
 
-  it("should compare password/string correctly", async () => {
-    const test_string = "password";
-    const hashedpass = await Password.toHash(test_string);
+  describe('compare method', () => {
+    it('should compare passwords and return true for a match', async () => {
+      const hashedPassword = 'mockedHashedPassword';
+      const suppliedPassword = 'password123';
 
-    const isMatch = await Password.compare(hashedpass, test_string);
+      const result = await Password.compare(hashedPassword, suppliedPassword);
 
-    expect(isMatch).toBe(true);
+      expect(result).toBe(true);
+      expect(bcrypt.compare).toHaveBeenCalledWith(suppliedPassword, hashedPassword);
+    });
+
+    it('should compare passwords and return false for a mismatch', async () => {
+      const hashedPassword = 'mockedHashedPassword';
+      const suppliedPassword = 'wrongPassword';
+
+      const result = await Password.compare(hashedPassword, suppliedPassword);
+
+      expect(result).toBe(false);
+      expect(bcrypt.compare).toHaveBeenCalledWith(suppliedPassword, hashedPassword);
+    });
   });
 });

@@ -31,6 +31,8 @@ const productSchema = new mongoose_1.default.Schema({
         },
     },
 });
+// Add an index on the createdAt field for sorting in ascending order
+productSchema.index({ createdAt: 1 });
 // setting up the build method that takes in only required parameters
 productSchema.statics.build = (attrs) => {
     return new Product(attrs);

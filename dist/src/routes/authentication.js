@@ -13,4 +13,7 @@ exports.authRouter = router;
 const authController = new authentication_1.AuthenticationController();
 router.route("/login").post((0, validations_1.validateBody)(["email", "password"]), common_1.validateRequest, authController.Login);
 router.route("/signup").post((0, validations_1.validateBody)(["email", "name", "password", "confirmPassword"]), common_1.validateRequest, authController.Signup);
+router.use(common_1.currentUser);
+router.use(common_1.requireAuth);
+router.route("/logout").get(authController.Logout);
 //# sourceMappingURL=authentication.js.map

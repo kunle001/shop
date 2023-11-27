@@ -30,17 +30,17 @@ app.use((req, res, next) => {
     (0, mongo_sanitize_1.default)(req.cookies);
     next();
 });
+// only 10 request in 20 minutes per Ip Address
 const limiter = (0, express_rate_limit_1.default)({
     max: 10,
-    windowMs: 60 * 30 * 1000,
-    message: 'Too many Requests from this Ip, try again in 30 minutes'
+    windowMs: 60 * 20 * 1000,
+    message: 'Too many Requests from this Ip, try again in 20 minutes'
 });
 // middle ware check check if there is a current user session
 app.use(common_1.currentUser);
-// add a rate limiter to authentication endpoints
+// add a rate limiter to authentication endpoints, to avoid spamming
 app.use([
-    '/api/v1/auth',
-    '/api/v1/products'
+    '/api/v1/auth'
 ], limiter);
 // routes
 app.use("/api/v1/auth", authentication_1.authRouter);

@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateBody = void 0;
 const express_validator_1 = require("express-validator");
+// This function validates the request body, it a list of the required fields
+// and validates request input
 const validateBody = (fields) => {
     const validator = [];
     for (let i = 0; i <= fields.length; i++) {
@@ -12,10 +14,11 @@ const validateBody = (fields) => {
                     .notEmpty()
                     .withMessage("missing field 'email'"));
                 break;
-            case "phone":
-                validator.push((0, express_validator_1.body)('phone')
+            case "price":
+                validator.push((0, express_validator_1.body)('price')
+                    .isNumeric()
                     .notEmpty()
-                    .withMessage("missing field 'phone'"));
+                    .withMessage("missing field 'price'"));
                 break;
             default:
                 validator.push((0, express_validator_1.body)(fields[i])
