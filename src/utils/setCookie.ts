@@ -9,7 +9,7 @@ export interface setCookiePayload {
 }
 
 
-//this function Automatically saves jwt in a cookie, just to access protected routes
+//this function saves jwt in a cookie, just to access protected routes
 
 export const setCookies = (payload: setCookiePayload, req: Request, res: Response): string => {
   const userjwt = jwt.sign({
